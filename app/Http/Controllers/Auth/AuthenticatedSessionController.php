@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        Auth::guard('web')->user()->generateToken();
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

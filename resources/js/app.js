@@ -1,7 +1,16 @@
-import './bootstrap';
+import Vue from "vue";
+window.axios = require('axios');
 
-import Alpine from 'alpinejs';
 
-window.Alpine = Alpine;
+const app = new Vue({
+    el: '#app',
+    components: {
+    },
+    data:{
+    },
+    computed:{
 
-Alpine.start();
+    },
+    methods:{
+    }
+});
