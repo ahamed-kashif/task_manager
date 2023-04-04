@@ -1,10 +1,11 @@
 <div>
     <x-input-label for="project_id" :value="__('Project')" />
-    <select name="project_id" id="project_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+    <select {{isset($task) ? 'disabled' : ''}} name="project_id" id="project_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
         @foreach($projects as  $project)
             <option value="{{$project->id}}" {{isset($task) && $task->project_id == $project->id}}>{{ucwords($project->title)}}</option>
         @endforeach
     </select>
+    <x-input-error :messages="$errors->get('project_id')" class="mt-2" />
 </div>
 
 <div class="mt-4">

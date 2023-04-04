@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('axios')->group(function () {
+   Route::get('fetch-tasks/{slug}', [\App\Http\Controllers\Api\AxiosController::class,'fetchTasks'])->name('axios.fetch.tasks');
+   Route::post('update-tasks-priority', [\App\Http\Controllers\Api\AxiosController::class,'updateTaskPriority'])->name('axios.fetch.tasks.update.priority');
 });

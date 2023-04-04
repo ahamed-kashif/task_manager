@@ -11,9 +11,13 @@ class Task extends Model
     protected $guarded = [
       'id', 'created_at', 'updated_at'
     ];
+    protected $dates = [
+        'deadline'
+    ];
 
     public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Project::class,'project_id','id');
     }
+
 }
