@@ -12,7 +12,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
         <!-- Scripts -->
         @if (isset($css))
             {{$css}}
@@ -51,10 +51,11 @@
         </div>
     @if(isset($js)) {{$js}} @endif
         <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script>
-        setTimeout(function () {
-            $('.toRemove').hide()
-        },2000)
-    </script>
+        <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+        <script>
+            setTimeout(function () {
+                $('.toRemove').hide()
+            },2000)
+        </script>
     </body>
 </html>

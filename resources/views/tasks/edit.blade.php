@@ -1,4 +1,7 @@
 <x-app-layout :title="$title">
+    <x-slot name="css">
+        <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
+    </x-slot>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ $title }}
@@ -23,4 +26,7 @@
             </div>
         </div>
     </div>
+    <x-slot name="js">
+        <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+    </x-slot>
 </x-app-layout>
