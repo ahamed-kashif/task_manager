@@ -41,7 +41,7 @@ class AxiosController extends Controller
                 $ogCat = Task::findOrFail($cat['id']);
                 if($ogCat){
                     $ogCat->update([
-                        'home_order' => $cat['priority']
+                        'priority' => $cat['priority']
                     ]);
                 }
             }

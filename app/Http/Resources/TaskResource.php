@@ -20,7 +20,7 @@ class TaskResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'deadline' => date('F j, Y, g:i a', strtotime("{$this->deadline}")),
-            'created_at' => date('F j, Y, g:i a', strtotime("{$this->created_at}")),
+            'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => date('F j, Y, g:i a', strtotime("{$this->updated_at}")),
             'edit_url' => route('tasks.edit',$this->slug),
             'delete_url' => route('tasks.delete',$this->slug)

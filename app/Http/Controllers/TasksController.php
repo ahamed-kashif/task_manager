@@ -15,20 +15,13 @@ class TasksController extends Controller
         $this->middleware(['auth:web']);
     }
 
-    public function index(){
-        return view('tasks.index')->with([
-            'title' => 'Tasks',
-            'projects' => Project::orderBy('created_at','desc')->get()
-        ]);
-    }
-
     public function store(TaskRequest $request){
         try{
             $task = Project::findOrFail($request->project_id)->tasks()->create(array_merge($request->only(['title','description']),['slug' => \Illuminate\Support\Str::slug($request->title)]));
             $task->update([
                 'priority' => $task->id
             ]);
-            return redirect()->back()->with([
+            return redirect()->route('dashboard')->with([
                 'success' => 'Task added'
             ]);
         }catch (\Exception $e){
@@ -47,7 +40,7 @@ class TasksController extends Controller
                 'projects' => Project::orderBy('created_at','desc')->get()
             ]);
         }catch (\Exception $e){
-            return redirect()->back()->with([
+            return redirect()->route('dashboard')->with([
                 'error' => $e->getMessage()
             ]);
         }
@@ -60,7 +53,7 @@ class TasksController extends Controller
         try{
             $task = Task::where('slug',$slug)->firstOrFail();
             $task->update(array_merge($request->only(['title','description']),['slug' => \Illuminate\Support\Str::slug($request->title)]));
-            return redirect()->back()->with([
+            return redirect()->route('dashboard')->with([
                 'success' => 'Task updated'
             ]);
         }catch (\Exception $e){
@@ -73,7 +66,7 @@ class TasksController extends Controller
         try{
             $task = Task::where('slug',$slug)->firstOrFail();
             $task->delete();
-            return redirect()->back()->with([
+            return redirect()->route('dashboard')->with([
                 'success' => 'Task removed'
             ]);
         }catch (\Exception $e){
