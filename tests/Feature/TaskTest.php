@@ -27,7 +27,7 @@ class TaskTest extends TestCase
             'project_id' => $project->id,
             'description' => 'this is a test task'
         ]);
-        $response->assertStatus(302);
+        $response->assertRedirect(route('dashboard'));
         $response->assertSessionHasNoErrors();
         $response->assertSessionHas('success');
     }
@@ -38,12 +38,12 @@ class TaskTest extends TestCase
      * @return void
      * @throws \JsonException
      */
-    public function tasks_can_be_edited(): void
+    public function tasks_edit_page_can_be_rendered(): void
     {
         $user = User::factory()->create();
         $task = Task::findOrFail(1);
         $response =  $this->actingAs($user)->get('/tasks/edit/'.$task->slug);
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     /**
@@ -59,7 +59,7 @@ class TaskTest extends TestCase
         $response =  $this->actingAs($user)->put('/tasks/update/'.$task->slug,[
             'title' => 'test updated'
         ]);
-        $response->assertStatus(302);
+        $response->assertRedirect(route('dashboard'));
         $response->assertSessionHasNoErrors();
         $response->assertSessionHas('success');
     }
@@ -75,7 +75,7 @@ class TaskTest extends TestCase
         $user = User::factory()->create();
         $task = Task::findOrFail(1);
         $response =  $this->actingAs($user)->delete('/tasks/delete/'.$task->slug);
-        $response->assertStatus(302);
+        $response->assertRedirect(route('dashboard'));
         $response->assertSessionHasNoErrors();
         $response->assertSessionHas('success');
     }
