@@ -2619,6 +2619,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3);
       }))();
+    },
+    taskBg: function taskBg(stat) {
+      switch (stat) {
+        case 'progress':
+          return 'bg-sky-200';
+        case 'done':
+          return 'bg-green-400';
+        case 'pending':
+          return 'bg-yellow-200';
+        default:
+          return 'bg-gray-500';
+      }
     }
   },
   mounted: function mounted() {
@@ -2688,7 +2700,9 @@ var render = function render() {
   }, _vm._l(_vm.tasks, function (task) {
     return _c("div", {
       key: task.priority,
-      staticClass: "flex flex-row justify-between border-b-2 border-gray-200"
+      "class": ["flex flex-row justify-between border-b-2 border-gray-200", {
+        "bg-gray-50": task.status === "done"
+      }]
     }, [_c("table", {
       staticClass: "table-auto w-full"
     }, [_c("tbody", [_c("tr", {}, [_c("td", {
@@ -2707,12 +2721,26 @@ var render = function render() {
       staticClass: "flex flex-col",
       attrs: {
         title: task.name
-      }
-    }, [_c("table", {
+      },
+      scopedSlots: _vm._u([{
+        key: "status",
+        fn: function fn() {
+          return [_c("div", {
+            "class": ["w-3 h-3 rounded-full mt-2 mr-5", _vm.taskBg(task.status)],
+            attrs: {
+              title: task.status
+            }
+          })];
+        },
+        proxy: true
+      }], null, true)
+    }, [_vm._v(" "), _c("table", {
       staticClass: "table-auto p-4"
     }, [_c("tbody", [_c("tr", [_c("td", [_c("strong", [_vm._v("Description")])]), _vm._v(" "), _c("td", {
       staticClass: "pl-3"
-    }, [_vm._v(_vm._s(task.description))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Deadline")])]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(task.description))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Status")])]), _vm._v(" "), _c("td", {
+      staticClass: "pl-3"
+    }, [_vm._v(_vm._s(task.status))])]), _vm._v(" "), _c("tr", [_c("td", [_c("strong", [_vm._v("Deadline")])]), _vm._v(" "), _c("td", {
       staticClass: "pl-3"
     }, [_vm._v(_vm._s(task.deadline))])])])]), _vm._v(" "), _c("table", {
       staticClass: "table-auto p-4"
@@ -2811,9 +2839,13 @@ var render = function render() {
         _vm.active = !_vm.active;
       }
     }
+  }, [_c("div", {
+    staticClass: "flex flex-row"
+  }, [_vm._t("status"), _vm._v(" "), _c("div", {
+    staticClass: "mr-4"
   }, [_c("span", {
     staticClass: "text-start"
-  }, [_vm._v(_vm._s(this.title))]), _vm._v(" "), _c("span", {
+  }, [_vm._v(_vm._s(this.title))])])], 2), _vm._v(" "), _c("span", {
     directives: [{
       name: "show",
       rawName: "v-show",

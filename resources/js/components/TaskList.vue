@@ -9,7 +9,7 @@
                 @start="false"
                 @end="reorder"
             >
-                <div v-for="task in tasks" :key="task.priority" class="flex flex-row justify-between border-b-2 border-gray-200">
+                <div v-for="task in tasks" :key="task.priority" :class="['flex flex-row justify-between border-b-2 border-gray-200',{'bg-gray-50':task.status === 'done'}]">
                     <table class="table-auto w-full">
                         <tbody>
                         <tr class="">
@@ -20,11 +20,16 @@
                             </td>
                             <td class="w-5/6">
                                 <accordion class="flex flex-col" :title="task.name" :key="task.id">
+                                    <template v-slot:status><div :class="['w-3 h-3 rounded-full mt-2 mr-5',taskBg(task.status)]" :title="task.status"></div></template>
                                     <table class="table-auto p-4">
                                         <tbody>
                                         <tr>
                                             <td><strong>Description</strong></td>
                                             <td class="pl-3">{{ task.description }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Status</strong></td>
+                                            <td class="pl-3">{{ task.status }}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Deadline</strong></td>
@@ -100,7 +105,7 @@ export default {
             return this.tasks.filter(task => {
                 return (task.title.toLowerCase().includes(this.search.toLowerCase()))
             })
-        },
+        }
     },
     methods:{
         async fetchTasks(url){
@@ -147,6 +152,14 @@ export default {
                 })
             }.bind(this, items), 2000)
         },
+        taskBg(stat){
+            switch (stat) {
+                case 'progress' : return 'bg-sky-200';
+                case 'done' : return 'bg-green-400';
+                case 'pending' : return 'bg-yellow-200';
+                default : return 'bg-gray-500';
+            }
+        }
     },
     mounted(){
         document.addEventListener("fetch-tasks", this.handleFetchTasks);

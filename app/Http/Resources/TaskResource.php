@@ -23,7 +23,8 @@ class TaskResource extends JsonResource
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => date('F j, Y, g:i a', strtotime("{$this->updated_at}")),
             'edit_url' => route('tasks.edit',$this->slug),
-            'delete_url' => route('tasks.delete',$this->slug)
+            'delete_url' => route('tasks.delete',$this->slug),
+            'status' => $this->status
         ];
     }
 }

@@ -17,7 +17,7 @@ class TasksController extends Controller
 
     public function store(TaskRequest $request){
         try{
-            $task = Project::findOrFail($request->project_id)->tasks()->create(array_merge($request->only(['title','description']),['slug' => \Illuminate\Support\Str::slug($request->title)]));
+            $task = Project::findOrFail($request->project_id)->tasks()->create(array_merge($request->only(['title','description','deadline','status']),['slug' => \Illuminate\Support\Str::slug($request->title)]));
             $task->update([
                 'priority' => $task->id
             ]);
@@ -52,7 +52,7 @@ class TasksController extends Controller
         ]);
         try{
             $task = Task::where('slug',$slug)->firstOrFail();
-            $task->update(array_merge($request->only(['title','description']),['slug' => \Illuminate\Support\Str::slug($request->title)]));
+            $task->update(array_merge($request->only(['title','description','deadline','status']),['slug' => \Illuminate\Support\Str::slug($request->title)]));
             return redirect()->route('dashboard')->with([
                 'success' => 'Task updated'
             ]);
